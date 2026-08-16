@@ -86,8 +86,33 @@ function markLearned(){let q=deck[di%deck.length];S.seen[q[1]]=true;save();nextC
 function nextCard(){di=(di+1)%deck.length;renderLearn()}
 function prevCard(){di=(di-1+deck.length)%deck.length;renderLearn()}
 
+function shuffleArray(arr){
+ for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}
+ return arr;
+}
+function balancedPositions(n){
+ const positions=[];
+ for(let i=0;i<n;i++) positions.push(i%4);
+ return shuffleArray(positions);
+}
+function prepareQuiz(source,n){
+ const picked=[...source];
+ shuffleArray(picked);
+ const selected=picked.slice(0,Math.min(n,picked.length));
+ const targets=balancedPositions(selected.length);
+ return selected.map((q,idx)=>{
+   const options=[...q[2]];
+   const correctText=options[q[3]];
+   const distractors=options.filter((_,i)=>i!==q[3]);
+   shuffleArray(distractors);
+   const arranged=[];
+   let d=0;
+   for(let i=0;i<4;i++) arranged.push(i===targets[idx]?correctText:distractors[d++]);
+   return [q[0],q[1],arranged,targets[idx],q[4]];
+ });
+}
 function startTest(n, source=questions){
- quiz=[...source].sort(()=>Math.random()-.5).slice(0,Math.min(n,source.length));qi=0;mode="quiz";renderQuiz();go("quiz")}
+ quiz=prepareQuiz(source,n);qi=0;mode="quiz";renderQuiz();go("quiz")}
 function renderQuiz(){
  if(!quiz.length){document.getElementById("quiz").innerHTML='<div class="card"><h2>No questions available.</h2></div>';return}
  if(qi>=quiz.length){finishTest();return}
