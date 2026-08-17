@@ -28,6 +28,7 @@ button.secondary{border:0;border-radius:12px;background:#e2e8f0;padding:11px 14p
 .topic{border:1px solid var(--line);border-radius:14px;padding:14px;margin:8px 0;background:#fff}
 .topic b{display:block}.bar{height:9px;background:#e2e8f0;border-radius:99px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:var(--blue)}
 .num{font-size:28px;font-weight:900;color:var(--blue)}
+.score{text-align:center;font-size:42px;font-weight:900;color:var(--blue);margin:10px 0}
 @media(max-width:650px){.grid{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:1/-1}}
 </style>
 </head>
@@ -45,9 +46,10 @@ button.secondary{border:0;border-radius:12px;background:#e2e8f0;padding:11px 14p
 </main>
 <script>
 const questions = [["Papers & Permits", "What must commercial motor vehicles, truck tractors, trailers, and semitrailers carry while operating on a public highway?", ["Registration papers (receipt for license plates).", "A copy of the driver's medical history.", "Only a bill of sale.", "A fuel receipt."], 0, "Section 14 says these vehicles must carry their registration papers (receipt for license plates) while operating on a public highway."], ["Papers & Permits", "What must the registration papers show?", ["The vehicle's empty weight and how much it is permitted to haul.", "Only the VIN and tire size.", "Only the driver's license class.", "Only the insurance premium."], 0, "The papers must show the weight of the vehicle empty and how much it is permitted to haul."], ["Papers & Permits", "When is a special permit required?", ["When a load or equipment is heavier, longer, wider, or higher than the law allows.", "Whenever a vehicle travels at night.", "Only when carrying passengers.", "Only when traveling inside city limits."], 0, "A special permit is required for a load/equipment that exceeds the legal limits for weight, length, width, or height."], ["Papers & Permits", "Who issues the special permit described in Section 14?", ["Texas Department of Transportation", "Texas Department of Public Safety only", "Federal Aviation Administration", "County tax office"], 0, "The page states that the special permit must be obtained from the Texas Department of Transportation."], ["Papers & Permits", "When will a special permit not be granted?", ["If the load can reasonably be dismantled.", "If the driver has a CDL.", "If the trip is during daylight.", "If the vehicle has working headlights."], 0, "The section says a permit will not be granted if the load can reasonably be dismantled."], ["Flares & Reflectors", "Which vehicles are covered by the flare/reflector requirement described in Section 14?", ["Truck, bus, truck tractor, or motor vehicle towing a house trailer.", "Only passenger cars.", "Only motorcycles.", "Only school buses."], 0, "The requirement applies to a truck, bus, truck tractor, or motor vehicle towing a house trailer."], ["Flares & Reflectors", "When does the roadway flare requirement apply?", ["On a highway outside city limits or on a divided highway at any time, and on any highway from sunset to one-half hour before sunrise.", "Only between midnight and 5 a.m.", "Only inside city limits.", "Only during rain."], 0, "Those are the roadway/time conditions stated on the page."], ["Flares & Reflectors", "How many flares are required when flares are the selected warning device?", ["Three", "One", "Two", "Five"], 0, "The page specifies three flares."], ["Flares & Reflectors", "What can be used in place of the three flares?", ["Three red electric lanterns or three portable red emergency reflectors.", "One white flashlight.", "Two amber flags only.", "One red tail lamp."], 0, "Three red electric lanterns or three portable red emergency reflectors may be used."], ["Flares & Reflectors", "When are two red flags used?", ["During times when lamps are not required, in place of flares, lanterns, or reflectors.", "Whenever the vehicle is moving.", "Only inside a city.", "Only on a divided highway."], 0, "The section specifies two red flags when lamps are not required."], ["Flares & Reflectors", "What must a vehicle transporting explosives or certain compressed flammable cargo avoid using?", ["Signals produced by flame, such as flares.", "Electric turn signals.", "Red reflectors.", "Hazard warning flashers."], 0, "Vehicles transporting explosives or certain compressed flammable cargo must not use flame-produced signals."], ["Flares & Reflectors", "What can be used instead of flame-producing signals for those vehicles?", ["DOT-approved triangular reflectors.", "White license-plate lamps.", "Two amber clearance lamps.", "A horn."], 0, "The page states that DOT-approved triangular reflectors may be used in lieu of the flame-producing equipment."], ["Flares & Reflectors", "What is the first thing the driver of a disabled vehicle must do?", ["Put out the proper flares, flags, or reflectors.", "Call a friend.", "Remove the license plate.", "Turn off all warning lights."], 0, "The page specifically states this is the first thing the driver must do."], ["Hazard Warning Lights", "Which stopped commercial vehicles must immediately actuate their electric hazard warning signal lights under this section?", ["Truck, bus, truck tractor, trailer, semitrailer, or pole trailer that is 80 inches or more wide or 30 feet or more in overall length.", "Any passenger car.", "Only vehicles under 60 inches wide.", "Only motorcycles."], 0, "The section identifies those commercial vehicles at 80+ inches in width or 30+ feet overall length."], ["Hazard Warning Lights", "How must the hazard warning signal lights flash?", ["Simultaneously.", "One at a time.", "Only on the driver's side.", "Only on the passenger side."], 0, "The flashers need to operate simultaneously."], ["Hazard Warning Lights", "When are the hazard warning signal lights not required under this section?", ["When the vehicle is legally parked inside city limits or stopped to receive or discharge passengers.", "Whenever the vehicle is on a highway.", "Only during daylight.", "Whenever the driver is alone."], 0, "Those two exceptions are stated on the page."], ["Fire Extinguishers", "What minimum extinguisher capacity is required for school buses, buses, taxis, and other vehicles hauling passengers for hire or lease?", ["At least one quart.", "At least one gallon.", "At least one pint.", "At least five gallons."], 0, "The section calls for a chemical-type fire extinguisher of at least one-quart capacity."], ["Fire Extinguishers", "What type of fire extinguisher is specified for the passenger vehicles listed in Section 14?", ["Chemical type.", "Water-only.", "Foam-only.", "CO2 only."], 0, "The page specifies a chemical-type fire extinguisher."], ["Fire Extinguishers", "For vehicles subject to Federal Motor Carrier Safety Regulations, where must the fire extinguisher be located?", ["Readily accessible for use and securely mounted on the vehicle.", "Locked in an off-site storage room.", "Under the driver's bed.", "Only in the trailer."], 0, "The extinguisher must be properly filled, readily accessible, and securely mounted."], ["Fire Extinguishers", "What condition must the fire extinguisher be in?", ["Properly filled.", "Empty but mounted.", "Unlabeled.", "Stored outside the vehicle."], 0, "The page requires the extinguisher to be properly filled."], ["Lighting & Reflectors", "At what height must required reflectors be mounted?", ["Not less than 24 inches and not more than 60 inches above the roadway.", "Between 5 and 10 inches.", "At least 72 inches.", "Exactly 100 inches."], 0, "The section states 24 to 60 inches above the roadway."], ["Lighting & Reflectors", "Which vehicles are specifically mentioned with the 24-to-60-inch reflector height requirement?", ["Every pole trailer, truck tractor, trailer, and semitrailer 80 inches or more in width.", "Only passenger cars.", "Only motorcycles.", "Only vehicles less than 60 inches wide."], 0, "The requirement is stated for those vehicles."], ["Lighting & Reflectors", "Which types of trailers may be exempt from lighting requirements under certain conditions?", ["Farm, fertilizer, and boat trailers.", "Only school buses.", "Only taxis.", "Only motorcycles."], 0, "The page notes exemptions for certain farm, fertilizer, and boat trailers under specified conditions."], ["Warning Device Placement", "On the two-way roadway diagram, when lamps are not required, what distance is shown behind the disabled vehicle?", ["100 feet.", "10 feet.", "200 feet.", "500 feet."], 0, "The two-way roadway diagram shows a warning device 100 feet behind the vehicle."], ["Warning Device Placement", "On the two-way roadway diagram, what distance is shown ahead of the disabled vehicle?", ["100 feet.", "10 feet.", "200 feet.", "500 feet."], 0, "The diagram shows 100 feet ahead, with the 10-foot location also identified near the vehicle."], ["Warning Device Placement", "On the divided-highway diagram, what longer warning distance is shown?", ["200 feet.", "10 feet.", "50 feet.", "500 feet."], 0, "The divided-highway diagram shows 200 feet as the longer distance."], ["Warning Device Placement", "On the divided-highway diagram, what other warning distance is shown?", ["100 feet.", "300 feet.", "400 feet.", "500 feet."], 0, "The diagram also shows 100 feet, along with the 10-foot point near the vehicle."], ["Warning Device Placement", "When vision is obscured, what does the diagram show for the warning distance?", ["100 feet or more than 500 feet on the approach side, and 100 feet on the other side.", "10 feet on both sides.", "200 feet on both sides.", "Exactly 500 feet on both sides."], 0, "The vision-obscured diagram is labeled 'NOT LESS THAN 100' or 'MORE THAN 500'' on one side and 100 feet on the other."], ["Under 80 Inches", "For a truck or bus less than 80 inches wide, what front lighting is shown?", ["Headlamps and electric turn-signal lamps, one on each side (white to amber).", "Two red clearance lamps only.", "Two red stop lamps only.", "No front lights."], 0, "The under-80-inch diagram shows headlamps and electric turn-signal lamps on each side."], ["Under 80 Inches", "For a truck or bus less than 80 inches wide, what rear lighting is shown?", ["One white license-plate lamp, two red tail lamps, two red stop lamps, two red reflectors, and rear turn signals.", "Only one white lamp.", "Only two amber lamps.", "Only two red reflectors."], 0, "The diagram lists all of those rear lamps/reflectors."], ["Under 80 Inches", "What does the under-80-inch truck/bus diagram show on each side?", ["No requirements.", "Two amber clearance lamps.", "One red clearance lamp.", "Three amber reflectors."], 0, "The diagram explicitly says 'NO REQUIREMENTS' on each side."], ["80 Inches or More", "What front clearance lamps are required on a truck or bus 80 inches or more in width?", ["Two amber clearance lamps.", "Two red clearance lamps.", "One white clearance lamp.", "No clearance lamps."], 0, "The diagram shows two amber clearance lamps at the front."], ["80 Inches or More", "What front turn-signal lamps are shown for a truck or bus 80 inches or more wide?", ["Electric turn-signal lamps, one on each side (white to amber).", "Only red rear signals.", "One white lamp in the center.", "No turn signals."], 0, "The front diagram specifies one electric turn-signal lamp on each side, white to amber."], ["80 Inches or More", "What rear clearance lamps are required on a truck or bus 80 inches or more wide?", ["Two red clearance lamps.", "Two amber clearance lamps.", "One white clearance lamp.", "No clearance lamps."], 0, "The rear diagram shows two red clearance lamps."], ["80 Inches or More", "What rear lighting/reflector equipment is shown for a truck or bus 80 inches or more wide?", ["One white license-plate lamp, two red tail lamps, two red stop lamps, two red reflectors, and rear turn signals.", "Only two red tail lamps.", "Only amber clearance lamps.", "Only one white lamp."], 0, "The diagram lists each of these rear requirements."], ["80 Inches or More", "What side marker/reflector colors are shown on the 80+ inch truck diagram?", ["Amber toward the front and red toward the rear.", "Red toward the front and amber toward the rear.", "White on both ends.", "Amber on both ends."], 0, "The side diagram shows an amber side marker/reflector toward the front and red toward the rear."], ["80 Inches or More", "Where is the optional location shown on the 80+ inch truck diagram?", ["Near the front for a side marker lamp.", "At the center of the roof.", "Under the rear axle.", "Inside the cab."], 0, "The diagram labels an optional front location for the side marker lamp."], ["Large Truck/Trailer Diagram", "What front clearance lamps are shown on the large truck/trailer diagram?", ["Two amber clearance lamps.", "Two red clearance lamps.", "One white lamp.", "No clearance lamps."], 0, "The front diagram shows two amber clearance lamps."], ["Large Truck/Trailer Diagram", "What rear clearance lamps are shown on the large truck/trailer diagram?", ["Two red clearance lamps.", "Two amber clearance lamps.", "One white lamp.", "No clearance lamps."], 0, "The rear diagram shows two red clearance lamps."], ["Large Truck/Trailer Diagram", "What license-plate lamp is shown on the rear of the large truck/trailer?", ["One white license-plate lamp.", "Two amber license-plate lamps.", "One red license-plate lamp.", "No license-plate lamp."], 0, "The rear diagram labels one white license-plate lamp."], ["Large Truck/Trailer Diagram", "What side marker colors are shown on the large truck/trailer?", ["Amber toward the front and red toward the rear.", "Red toward the front and amber toward the rear.", "White at both ends.", "Red at both ends."], 0, "The side diagram shows amber at the front and red at the rear."], ["Bus Lighting", "What side marker colors are shown on the bus diagram?", ["Red toward the front and amber toward the rear.", "Amber toward the front and red toward the rear.", "White at both ends.", "Amber at both ends."], 0, "The bus diagram labels a red side marker toward the front and an amber side marker toward the rear."], ["Bus Lighting", "What reflector colors are shown on the bus diagram?", ["Red toward the front and amber toward the rear.", "Amber toward the front and red toward the rear.", "White at both ends.", "No reflectors."], 0, "The bus diagram shows a red reflector toward the front and an amber reflector toward the rear."], ["Older Trucks", "What special note applies to trucks manufactured or assembled before model year 1960?", ["They must have at least one taillight.", "They must have two amber clearance lamps.", "They are exempt from all lighting.", "They cannot operate on highways."], 0, "The page footnote states that trucks made or assembled before model year 1960 must have at least one taillight."], ["Vehicle Recognition", "On a truck less than 80 inches wide, are side lighting requirements shown?", ["No requirements are shown.", "Two amber clearance lamps are required.", "Two red clearance lamps are required.", "Three white lamps are required."], 0, "The under-80-inch truck diagram explicitly states 'NO REQUIREMENTS' on each side."], ["Vehicle Recognition", "What color is the license-plate lamp shown throughout the rear diagrams?", ["White.", "Red.", "Amber.", "Blue."], 0, "The diagrams identify the license-plate lamp as white."], ["Vehicle Recognition", "What colors are used for the clearance lamps on an 80+ inch vehicle?", ["Amber at the front and red at the rear.", "Red at the front and amber at the rear.", "White at both ends.", "Blue at the front and red at the rear."], 0, "The 80+ inch diagrams show amber front clearance lamps and red rear clearance lamps."]];
-const key="txcmv_section14_v3";
+
+const key="txcmv_section14_v4";
 let S=JSON.parse(localStorage.getItem(key)||'{"seen":{},"correct":0,"answered":0,"missed":{},"topic":{}}');
-let deck=[...questions], di=0, quiz=[], qi=0, mode="quiz";
+let deck=[...questions], di=0, quiz=[], qi=0, mode="quiz", testCorrect=0, testAnswered=0, testTitle="Quiz";
 
 const labels=[["home","Home"],["learn","Learn"],["quiz","Quiz"],["mastery","Mastery"],["missed","Missed"],["topics","Topics"],["numbers","Numbers"]];
 document.getElementById("nav").innerHTML=labels.map(([id,l])=>`<button data-v="${id}" onclick="go('${id}')">${l}</button>`).join("");
@@ -111,13 +113,24 @@ function prepareQuiz(source,n){
    return [q[0],q[1],arranged,targets[idx],q[4]];
  });
 }
-function startTest(n, source=questions){
- quiz=prepareQuiz(source,n);qi=0;mode="quiz";renderQuiz();go("quiz")}
+function startTest(n, source=questions, title="Quiz"){
+ quiz=prepareQuiz(source,n);qi=0;testCorrect=0;testAnswered=0;testTitle=title;mode="quiz";go("quiz")}
+function startMissedTest(){
+ const m=questions.filter(q=>S.missed[q[1]]);
+ if(!m.length){
+   alert("You don't have any missed questions yet.");
+   return;
+ }
+ startTest(m.length,m,"Missed Questions Test");
+}
 function renderQuiz(){
- if(!quiz.length){document.getElementById("quiz").innerHTML='<div class="card"><h2>No questions available.</h2></div>';return}
+ if(!quiz.length){
+   document.getElementById("quiz").innerHTML='<div class="card"><h2>No questions available.</h2></div>';
+   return;
+ }
  if(qi>=quiz.length){finishTest();return}
  const q=quiz[qi];
- document.getElementById("quiz").innerHTML=`<div class="card"><span class="badge">${q[0]}</span><p class="small">Question ${qi+1} of ${quiz.length}</p><h2>${q[1]}</h2>
+ document.getElementById("quiz").innerHTML=`<div class="card"><span class="badge">${testTitle}</span><p class="small">Question ${qi+1} of ${quiz.length}</p><h2>${q[1]}</h2>
  <div id="opts">${q[2].map((a,i)=>`<button class="option" onclick="answer(${i})">${String.fromCharCode(65+i)}. ${a}</button>`).join("")}</div><div id="fb"></div></div>`;
 }
 function answer(i){
@@ -125,17 +138,42 @@ function answer(i){
  buttons.forEach(b=>b.disabled=true);
  const ok=i===q[3];
  buttons[q[3]].classList.add("correct"); if(!ok)buttons[i].classList.add("wrong");
- S.answered=(S.answered||0)+1;if(ok)S.correct=(S.correct||0)+1;
+
+ testAnswered++;
+ if(ok)testCorrect++;
+
+ S.answered=(S.answered||0)+1;
+ if(ok)S.correct=(S.correct||0)+1;
  S.seen[q[1]]=true;
- if(!ok)S.missed[q[1]]=(S.missed[q[1]]||0)+1;
- S.topic[q[0]]=(S.topic[q[0]]||{a:0,c:0});S.topic[q[0]].a++;if(ok)S.topic[q[0]].c++;
+
+ if(!ok){
+   S.missed[q[1]]=(S.missed[q[1]]||0)+1;
+ }else if(S.missed[q[1]]){
+   delete S.missed[q[1]];
+ }
+
+ S.topic[q[0]]=(S.topic[q[0]]||{a:0,c:0});
+ S.topic[q[0]].a++;
+ if(ok)S.topic[q[0]].c++;
  save();
+
  document.getElementById("fb").innerHTML=`<div class="feedback"><b>${ok?"Correct!":"Not quite."}</b><br>${q[4]}<br><button class="primary" onclick="nextQuestion()">Next Question</button></div>`;
 }
 function nextQuestion(){qi++;renderQuiz()}
 function finishTest(){
- const total=quiz.length, correct=quiz.filter((q,idx)=>true).length; 
- document.getElementById("quiz").innerHTML=`<div class="card"><h2>Test complete 🎉</h2><p>Your answers were saved to your progress.</p><button class="primary" onclick="startTest(10)">Take Another 10-Question Quiz</button><button class="primary" onclick="go('mastery')">View Mastery</button></div>`;
+ const total=testAnswered;
+ const score=pct(testCorrect,total);
+ document.getElementById("quiz").innerHTML=`<div class="card">
+ <span class="badge">${testTitle}</span>
+ <h2>Test complete 🎉</h2>
+ <div class="score">${testCorrect}/${total}</div>
+ <p style="text-align:center;font-weight:800;font-size:18px">${score}%</p>
+ <p style="text-align:center">Your answers were saved to your progress.</p>
+ ${testTitle==="Missed Questions Test" ? `<p style="text-align:center" class="small">Questions answered correctly have been removed from your Missed Questions list.</p>` : ""}
+ <button class="primary" onclick="startTest(10)">Take Another 10-Question Quiz</button>
+ <button class="primary" onclick="go('missed')">Review Missed Questions</button>
+ <button class="primary" onclick="go('mastery')">View Mastery</button>
+ </div>`;
 }
 
 function renderMastery(){
@@ -146,13 +184,21 @@ function renderMastery(){
 }
 function renderMissed(){
  const m=questions.filter(q=>S.missed[q[1]]);
- document.getElementById("missed").innerHTML=`<div class="card"><h2>Missed Questions</h2><p class="small">${m.length} questions currently need review.</p>${m.length?`<button class="primary" onclick="startTest(${m.length},m)">Practice Missed Questions</button>`:"<p>Nothing missed yet. Keep going!</p>"}</div>${m.map(q=>`<div class="topic"><b>${q[1]}</b><span class="small">${q[0]} • missed ${S.missed[q[1]]} time(s)</span></div>`).join("")}`;
+ document.getElementById("missed").innerHTML=`<div class="card">
+ <h2>Missed Questions</h2>
+ <p class="small">${m.length} questions currently need review.</p>
+ ${m.length?`<button class="primary" onclick="startMissedTest()">Practice Missed Questions</button>`:"<p>Nothing missed yet. Keep going!</p>"}
+ </div>
+ ${m.map(q=>`<div class="topic"><b>${q[1]}</b><span class="small">${q[0]} • missed ${S.missed[q[1]]} time(s)</span></div>`).join("")}`;
 }
 function renderTopics(){
  const topics=[...new Set(questions.map(q=>q[0]))];
  document.getElementById("topics").innerHTML=`<div class="card"><h2>Topics</h2>${topics.map(t=>{let n=questions.filter(q=>q[0]===t).length;return `<div class="topic"><b>${t}</b><span class="small">${n} questions</span><button class="secondary" onclick='startTopic(${JSON.stringify(t)})'>Practice</button></div>`}).join("")}</div>`;
 }
-function startTopic(t){startTest(questions.filter(q=>q[0]===t).length,questions.filter(q=>q[0]===t))}
+function startTopic(t){
+ const topicQuestions=questions.filter(q=>q[0]===t);
+ startTest(topicQuestions.length,topicQuestions,t+" Practice");
+}
 function renderNumbers(){
  const nums=[
  ["80 inches","Width threshold used in the lighting diagrams."],
@@ -169,8 +215,24 @@ function renderNumbers(){
  ];
  document.getElementById("numbers").innerHTML=`<div class="card"><h2>Important Numbers</h2><p class="small">Memorize these measurements from the uploaded Section 14 pages.</p></div>${nums.map(x=>`<div class="card"><div class="num">${x[0]}</div><div>${x[1]}</div></div>`).join("")}`;
 }
-function resetProgress(){if(confirm("Reset all Section 14 progress?")){S={seen:{},correct:0,answered:0,missed:{},topic:{}};save();renderAll()}}
-function renderAll(){renderHome();renderLearn();renderMastery();renderMissed();renderTopics();renderNumbers();if(document.getElementById("quiz").classList.contains("active"))renderQuiz()}
-renderAll();go("home");
+function resetProgress(){
+ if(confirm("Reset all Section 14 progress?")){
+   S={seen:{},correct:0,answered:0,missed:{},topic:{}};
+   save();
+   renderAll();
+ }
+}
+function renderAll(){
+ renderHome();
+ renderLearn();
+ renderMastery();
+ renderMissed();
+ renderTopics();
+ renderNumbers();
+ if(document.getElementById("quiz").classList.contains("active"))renderQuiz();
+}
+renderAll();
+go("home");
 </script>
-</body></html>
+</body>
+</html>
