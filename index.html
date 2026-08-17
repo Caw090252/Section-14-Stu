@@ -6,233 +6,345 @@
 <meta name="theme-color" content="#0f172a">
 <title>Texas CMV — Section 14 Study</title>
 <style>
-:root{--bg:#f1f5f9;--card:#fff;--ink:#0f172a;--muted:#64748b;--blue:#2563eb;--blue2:#dbeafe;--green:#16a34a;--red:#dc2626;--line:#e2e8f0}
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
-header{background:#0f172a;color:white;padding:24px 16px 18px;position:sticky;top:0;z-index:5}
-header h1{margin:0;font-size:25px}header p{margin:6px 0 0;color:#cbd5e1}
-nav{display:flex;gap:8px;overflow-x:auto;padding:12px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:84px;z-index:4}
-nav button{border:0;border-radius:999px;background:#e2e8f0;color:#0f172a;padding:11px 16px;font-weight:700;white-space:nowrap}
-nav button.active{background:var(--blue);color:white}
-main{max-width:920px;margin:auto;padding:16px}
-.view{display:none}.view.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:14px;box-shadow:0 2px 10px rgba(15,23,42,.05)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{text-align:center;background:#f8fafc;border-radius:16px;padding:18px}.stat b{font-size:30px;display:block}.small{color:var(--muted);font-size:14px}
-button.primary{width:100%;border:0;border-radius:14px;background:var(--blue);color:#fff;padding:15px;font-size:17px;font-weight:800;margin-top:10px}
-button.secondary{border:0;border-radius:12px;background:#e2e8f0;padding:11px 14px;font-weight:700}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.flash{min-height:250px;display:flex;flex-direction:column;justify-content:center;text-align:center;align-items:center}
-.flash h2{font-size:26px}.flash .answer{display:none;margin-top:12px;color:var(--blue);font-weight:800}
-.option{width:100%;text-align:left;border:2px solid var(--line);background:#fff;border-radius:12px;padding:13px;margin:6px 0;font-size:16px}
-.option.correct{border-color:#22c55e;background:#f0fdf4}.option.wrong{border-color:#ef4444;background:#fef2f2}
-.feedback{margin-top:12px;padding:12px;border-radius:12px;background:#f8fafc}
-.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--blue2);color:#1d4ed8;font-weight:800;font-size:13px}
-.topic{border:1px solid var(--line);border-radius:14px;padding:14px;margin:8px 0;background:#fff}
-.topic b{display:block}.bar{height:9px;background:#e2e8f0;border-radius:99px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:var(--blue)}
-.num{font-size:28px;font-weight:900;color:var(--blue)}
-.score{text-align:center;font-size:42px;font-weight:900;color:var(--blue);margin:10px 0}
-@media(max-width:650px){.grid{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:1/-1}}
+:root{--bg:#f1f5f9;--card:#fff;--ink:#0f172a;--muted:#64748b;--line:#cbd5e1;--accent:#2563eb;--good:#15803d;--bad:#b91c1c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:#0f172a;color:#fff;padding:20px 16px 16px;position:sticky;top:0;z-index:5}
+h1{font-size:22px;margin:0 0 4px}.sub{color:#cbd5e1;font-size:13px}
+main{max-width:900px;margin:auto;padding:14px}
+nav{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+button{border:0;border-radius:10px;padding:12px 10px;font-weight:700;font-size:14px;cursor:pointer}
+.navbtn{background:#e2e8f0;color:#0f172a}.navbtn.active{background:var(--accent);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px #0000000b}
+h2{font-size:19px;margin:0 0 8px}.muted{color:var(--muted)}.small{font-size:12px;color:var(--muted)}
+.progress{height:9px;background:#e2e8f0;border-radius:99px;overflow:hidden;margin:10px 0 14px}.bar{height:100%;background:var(--accent);width:0}
+.q{font-size:19px;font-weight:750;line-height:1.35;margin:10px 0 14px}
+.answers{display:grid;gap:9px}.answer{background:#f8fafc;border:1px solid var(--line);text-align:left;font-weight:650}.answer.correct{background:#dcfce7;border-color:#86efac;color:#166534}.answer.wrong{background:#fee2e2;border-color:#fca5a5;color:#991b1b}
+.feedback{margin-top:12px;padding:12px;border-radius:10px;font-weight:650}.feedback.good{background:#dcfce7;color:#166534}.feedback.bad{background:#fee2e2;color:#991b1b}
+.row{display:flex;gap:8px;flex-wrap:wrap}.primary{background:var(--accent);color:#fff}.secondary{background:#e2e8f0}.danger{background:#fee2e2;color:#991b1b}
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}.stat b{display:block;font-size:22px}
+.study-item{border-top:1px solid var(--line);padding:14px 0}.study-item:first-child{border-top:0}.study-q{font-weight:750}.answer-text{margin-top:7px;color:#166534;font-weight:650}
+input,select{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:#fff}
+label{font-size:13px;font-weight:700;display:block;margin-bottom:5px}
+.hidden{display:none!important}
+footer{padding:25px 14px;color:var(--muted);text-align:center;font-size:12px}
+@media(max-width:600px){nav{grid-template-columns:repeat(2,1fr)}.statgrid{grid-template-columns:1fr 1fr 1fr}.q{font-size:18px}}
 </style>
 </head>
 <body>
-<header><h1>Texas CMV — Section 14</h1><p>Comprehensive study app • based only on the Section 14 pages you uploaded</p></header>
-<nav id="nav"></nav>
+<header>
+  <h1>Texas CMV — Section 14 Study</h1>
+  <div class="sub">Training material from the Section 14 pages you provided (14-11 through 14-16)</div>
+</header>
 <main>
-<section id="home" class="view active"></section>
-<section id="learn" class="view"></section>
-<section id="quiz" class="view"></section>
-<section id="mastery" class="view"></section>
-<section id="missed" class="view"></section>
-<section id="topics" class="view"></section>
-<section id="numbers" class="view"></section>
+  <nav>
+    <button class="navbtn active" data-tab="train">Training</button>
+    <button class="navbtn" data-tab="test">Test</button>
+    <button class="navbtn" data-tab="missed">Missed</button>
+    <button class="navbtn" data-tab="study">Study Guide</button>
+  </nav>
+
+  <section id="train">
+    <div class="card">
+      <div class="row" style="justify-content:space-between;align-items:center">
+        <div><h2>Training Mode</h2><div class="small">One question at a time • answers are randomized</div></div>
+        <div class="small" id="trainCount"></div>
+      </div>
+      <div class="progress"><div class="bar" id="trainBar"></div></div>
+      <div id="trainQuestion"></div>
+    </div>
+  </section>
+
+  <section id="test" class="hidden">
+    <div class="card" id="testSetup">
+      <h2>Practice Test</h2>
+      <p class="muted">Questions and answer choices are randomized. Missed questions are saved on this device.</p>
+      <label for="testSize">Number of questions</label>
+      <select id="testSize">
+        <option value="20">20</option><option value="30">30</option><option value="40">40</option>
+        <option value="50">50</option><option value="70">70</option>
+      </select>
+      <div style="height:10px"></div>
+      <button class="primary" onclick="startTest()">Start Test</button>
+    </div>
+    <div class="card hidden" id="testCard">
+      <div class="row" style="justify-content:space-between"><b id="testCount"></b><b id="testScore"></b></div>
+      <div class="progress"><div class="bar" id="testBar"></div></div>
+      <div id="testQuestion"></div>
+    </div>
+    <div class="card hidden" id="testResult"></div>
+  </section>
+
+  <section id="missed" class="hidden">
+    <div class="card">
+      <h2>Missed Questions</h2>
+      <div class="statgrid">
+        <div class="stat"><b id="missedNum">0</b><span class="small">Saved</span></div>
+        <div class="stat"><b id="bestScore">—</b><span class="small">Best test</span></div>
+        <div class="stat"><b id="attempts">0</b><span class="small">Tests</span></div>
+      </div>
+      <div style="height:12px"></div>
+      <div id="missedList"></div>
+      <div class="row" style="margin-top:12px"><button class="danger" onclick="clearMissed()">Clear Missed Questions</button><button class="secondary" onclick="clearStats()">Reset Stats</button></div>
+    </div>
+  </section>
+
+  <section id="study" class="hidden">
+    <div class="card">
+      <h2>Study Guide</h2>
+      <p class="muted">Use this for memorization before testing. The material below is based on the pages in your photos.</p>
+      <div id="studyGuide"></div>
+    </div>
+  </section>
 </main>
+<footer>Section 14 training • Always use the current Texas DPS handbook and current law for the official exam.</footer>
+
 <script>
-const questions = [["Papers & Permits", "What must commercial motor vehicles, truck tractors, trailers, and semitrailers carry while operating on a public highway?", ["Registration papers (receipt for license plates).", "A copy of the driver's medical history.", "Only a bill of sale.", "A fuel receipt."], 0, "Section 14 says these vehicles must carry their registration papers (receipt for license plates) while operating on a public highway."], ["Papers & Permits", "What must the registration papers show?", ["The vehicle's empty weight and how much it is permitted to haul.", "Only the VIN and tire size.", "Only the driver's license class.", "Only the insurance premium."], 0, "The papers must show the weight of the vehicle empty and how much it is permitted to haul."], ["Papers & Permits", "When is a special permit required?", ["When a load or equipment is heavier, longer, wider, or higher than the law allows.", "Whenever a vehicle travels at night.", "Only when carrying passengers.", "Only when traveling inside city limits."], 0, "A special permit is required for a load/equipment that exceeds the legal limits for weight, length, width, or height."], ["Papers & Permits", "Who issues the special permit described in Section 14?", ["Texas Department of Transportation", "Texas Department of Public Safety only", "Federal Aviation Administration", "County tax office"], 0, "The page states that the special permit must be obtained from the Texas Department of Transportation."], ["Papers & Permits", "When will a special permit not be granted?", ["If the load can reasonably be dismantled.", "If the driver has a CDL.", "If the trip is during daylight.", "If the vehicle has working headlights."], 0, "The section says a permit will not be granted if the load can reasonably be dismantled."], ["Flares & Reflectors", "Which vehicles are covered by the flare/reflector requirement described in Section 14?", ["Truck, bus, truck tractor, or motor vehicle towing a house trailer.", "Only passenger cars.", "Only motorcycles.", "Only school buses."], 0, "The requirement applies to a truck, bus, truck tractor, or motor vehicle towing a house trailer."], ["Flares & Reflectors", "When does the roadway flare requirement apply?", ["On a highway outside city limits or on a divided highway at any time, and on any highway from sunset to one-half hour before sunrise.", "Only between midnight and 5 a.m.", "Only inside city limits.", "Only during rain."], 0, "Those are the roadway/time conditions stated on the page."], ["Flares & Reflectors", "How many flares are required when flares are the selected warning device?", ["Three", "One", "Two", "Five"], 0, "The page specifies three flares."], ["Flares & Reflectors", "What can be used in place of the three flares?", ["Three red electric lanterns or three portable red emergency reflectors.", "One white flashlight.", "Two amber flags only.", "One red tail lamp."], 0, "Three red electric lanterns or three portable red emergency reflectors may be used."], ["Flares & Reflectors", "When are two red flags used?", ["During times when lamps are not required, in place of flares, lanterns, or reflectors.", "Whenever the vehicle is moving.", "Only inside a city.", "Only on a divided highway."], 0, "The section specifies two red flags when lamps are not required."], ["Flares & Reflectors", "What must a vehicle transporting explosives or certain compressed flammable cargo avoid using?", ["Signals produced by flame, such as flares.", "Electric turn signals.", "Red reflectors.", "Hazard warning flashers."], 0, "Vehicles transporting explosives or certain compressed flammable cargo must not use flame-produced signals."], ["Flares & Reflectors", "What can be used instead of flame-producing signals for those vehicles?", ["DOT-approved triangular reflectors.", "White license-plate lamps.", "Two amber clearance lamps.", "A horn."], 0, "The page states that DOT-approved triangular reflectors may be used in lieu of the flame-producing equipment."], ["Flares & Reflectors", "What is the first thing the driver of a disabled vehicle must do?", ["Put out the proper flares, flags, or reflectors.", "Call a friend.", "Remove the license plate.", "Turn off all warning lights."], 0, "The page specifically states this is the first thing the driver must do."], ["Hazard Warning Lights", "Which stopped commercial vehicles must immediately actuate their electric hazard warning signal lights under this section?", ["Truck, bus, truck tractor, trailer, semitrailer, or pole trailer that is 80 inches or more wide or 30 feet or more in overall length.", "Any passenger car.", "Only vehicles under 60 inches wide.", "Only motorcycles."], 0, "The section identifies those commercial vehicles at 80+ inches in width or 30+ feet overall length."], ["Hazard Warning Lights", "How must the hazard warning signal lights flash?", ["Simultaneously.", "One at a time.", "Only on the driver's side.", "Only on the passenger side."], 0, "The flashers need to operate simultaneously."], ["Hazard Warning Lights", "When are the hazard warning signal lights not required under this section?", ["When the vehicle is legally parked inside city limits or stopped to receive or discharge passengers.", "Whenever the vehicle is on a highway.", "Only during daylight.", "Whenever the driver is alone."], 0, "Those two exceptions are stated on the page."], ["Fire Extinguishers", "What minimum extinguisher capacity is required for school buses, buses, taxis, and other vehicles hauling passengers for hire or lease?", ["At least one quart.", "At least one gallon.", "At least one pint.", "At least five gallons."], 0, "The section calls for a chemical-type fire extinguisher of at least one-quart capacity."], ["Fire Extinguishers", "What type of fire extinguisher is specified for the passenger vehicles listed in Section 14?", ["Chemical type.", "Water-only.", "Foam-only.", "CO2 only."], 0, "The page specifies a chemical-type fire extinguisher."], ["Fire Extinguishers", "For vehicles subject to Federal Motor Carrier Safety Regulations, where must the fire extinguisher be located?", ["Readily accessible for use and securely mounted on the vehicle.", "Locked in an off-site storage room.", "Under the driver's bed.", "Only in the trailer."], 0, "The extinguisher must be properly filled, readily accessible, and securely mounted."], ["Fire Extinguishers", "What condition must the fire extinguisher be in?", ["Properly filled.", "Empty but mounted.", "Unlabeled.", "Stored outside the vehicle."], 0, "The page requires the extinguisher to be properly filled."], ["Lighting & Reflectors", "At what height must required reflectors be mounted?", ["Not less than 24 inches and not more than 60 inches above the roadway.", "Between 5 and 10 inches.", "At least 72 inches.", "Exactly 100 inches."], 0, "The section states 24 to 60 inches above the roadway."], ["Lighting & Reflectors", "Which vehicles are specifically mentioned with the 24-to-60-inch reflector height requirement?", ["Every pole trailer, truck tractor, trailer, and semitrailer 80 inches or more in width.", "Only passenger cars.", "Only motorcycles.", "Only vehicles less than 60 inches wide."], 0, "The requirement is stated for those vehicles."], ["Lighting & Reflectors", "Which types of trailers may be exempt from lighting requirements under certain conditions?", ["Farm, fertilizer, and boat trailers.", "Only school buses.", "Only taxis.", "Only motorcycles."], 0, "The page notes exemptions for certain farm, fertilizer, and boat trailers under specified conditions."], ["Warning Device Placement", "On the two-way roadway diagram, when lamps are not required, what distance is shown behind the disabled vehicle?", ["100 feet.", "10 feet.", "200 feet.", "500 feet."], 0, "The two-way roadway diagram shows a warning device 100 feet behind the vehicle."], ["Warning Device Placement", "On the two-way roadway diagram, what distance is shown ahead of the disabled vehicle?", ["100 feet.", "10 feet.", "200 feet.", "500 feet."], 0, "The diagram shows 100 feet ahead, with the 10-foot location also identified near the vehicle."], ["Warning Device Placement", "On the divided-highway diagram, what longer warning distance is shown?", ["200 feet.", "10 feet.", "50 feet.", "500 feet."], 0, "The divided-highway diagram shows 200 feet as the longer distance."], ["Warning Device Placement", "On the divided-highway diagram, what other warning distance is shown?", ["100 feet.", "300 feet.", "400 feet.", "500 feet."], 0, "The diagram also shows 100 feet, along with the 10-foot point near the vehicle."], ["Warning Device Placement", "When vision is obscured, what does the diagram show for the warning distance?", ["100 feet or more than 500 feet on the approach side, and 100 feet on the other side.", "10 feet on both sides.", "200 feet on both sides.", "Exactly 500 feet on both sides."], 0, "The vision-obscured diagram is labeled 'NOT LESS THAN 100' or 'MORE THAN 500'' on one side and 100 feet on the other."], ["Under 80 Inches", "For a truck or bus less than 80 inches wide, what front lighting is shown?", ["Headlamps and electric turn-signal lamps, one on each side (white to amber).", "Two red clearance lamps only.", "Two red stop lamps only.", "No front lights."], 0, "The under-80-inch diagram shows headlamps and electric turn-signal lamps on each side."], ["Under 80 Inches", "For a truck or bus less than 80 inches wide, what rear lighting is shown?", ["One white license-plate lamp, two red tail lamps, two red stop lamps, two red reflectors, and rear turn signals.", "Only one white lamp.", "Only two amber lamps.", "Only two red reflectors."], 0, "The diagram lists all of those rear lamps/reflectors."], ["Under 80 Inches", "What does the under-80-inch truck/bus diagram show on each side?", ["No requirements.", "Two amber clearance lamps.", "One red clearance lamp.", "Three amber reflectors."], 0, "The diagram explicitly says 'NO REQUIREMENTS' on each side."], ["80 Inches or More", "What front clearance lamps are required on a truck or bus 80 inches or more in width?", ["Two amber clearance lamps.", "Two red clearance lamps.", "One white clearance lamp.", "No clearance lamps."], 0, "The diagram shows two amber clearance lamps at the front."], ["80 Inches or More", "What front turn-signal lamps are shown for a truck or bus 80 inches or more wide?", ["Electric turn-signal lamps, one on each side (white to amber).", "Only red rear signals.", "One white lamp in the center.", "No turn signals."], 0, "The front diagram specifies one electric turn-signal lamp on each side, white to amber."], ["80 Inches or More", "What rear clearance lamps are required on a truck or bus 80 inches or more wide?", ["Two red clearance lamps.", "Two amber clearance lamps.", "One white clearance lamp.", "No clearance lamps."], 0, "The rear diagram shows two red clearance lamps."], ["80 Inches or More", "What rear lighting/reflector equipment is shown for a truck or bus 80 inches or more wide?", ["One white license-plate lamp, two red tail lamps, two red stop lamps, two red reflectors, and rear turn signals.", "Only two red tail lamps.", "Only amber clearance lamps.", "Only one white lamp."], 0, "The diagram lists each of these rear requirements."], ["80 Inches or More", "What side marker/reflector colors are shown on the 80+ inch truck diagram?", ["Amber toward the front and red toward the rear.", "Red toward the front and amber toward the rear.", "White on both ends.", "Amber on both ends."], 0, "The side diagram shows an amber side marker/reflector toward the front and red toward the rear."], ["80 Inches or More", "Where is the optional location shown on the 80+ inch truck diagram?", ["Near the front for a side marker lamp.", "At the center of the roof.", "Under the rear axle.", "Inside the cab."], 0, "The diagram labels an optional front location for the side marker lamp."], ["Large Truck/Trailer Diagram", "What front clearance lamps are shown on the large truck/trailer diagram?", ["Two amber clearance lamps.", "Two red clearance lamps.", "One white lamp.", "No clearance lamps."], 0, "The front diagram shows two amber clearance lamps."], ["Large Truck/Trailer Diagram", "What rear clearance lamps are shown on the large truck/trailer diagram?", ["Two red clearance lamps.", "Two amber clearance lamps.", "One white lamp.", "No clearance lamps."], 0, "The rear diagram shows two red clearance lamps."], ["Large Truck/Trailer Diagram", "What license-plate lamp is shown on the rear of the large truck/trailer?", ["One white license-plate lamp.", "Two amber license-plate lamps.", "One red license-plate lamp.", "No license-plate lamp."], 0, "The rear diagram labels one white license-plate lamp."], ["Large Truck/Trailer Diagram", "What side marker colors are shown on the large truck/trailer?", ["Amber toward the front and red toward the rear.", "Red toward the front and amber toward the rear.", "White at both ends.", "Red at both ends."], 0, "The side diagram shows amber at the front and red at the rear."], ["Bus Lighting", "What side marker colors are shown on the bus diagram?", ["Red toward the front and amber toward the rear.", "Amber toward the front and red toward the rear.", "White at both ends.", "Amber at both ends."], 0, "The bus diagram labels a red side marker toward the front and an amber side marker toward the rear."], ["Bus Lighting", "What reflector colors are shown on the bus diagram?", ["Red toward the front and amber toward the rear.", "Amber toward the front and red toward the rear.", "White at both ends.", "No reflectors."], 0, "The bus diagram shows a red reflector toward the front and an amber reflector toward the rear."], ["Older Trucks", "What special note applies to trucks manufactured or assembled before model year 1960?", ["They must have at least one taillight.", "They must have two amber clearance lamps.", "They are exempt from all lighting.", "They cannot operate on highways."], 0, "The page footnote states that trucks made or assembled before model year 1960 must have at least one taillight."], ["Vehicle Recognition", "On a truck less than 80 inches wide, are side lighting requirements shown?", ["No requirements are shown.", "Two amber clearance lamps are required.", "Two red clearance lamps are required.", "Three white lamps are required."], 0, "The under-80-inch truck diagram explicitly states 'NO REQUIREMENTS' on each side."], ["Vehicle Recognition", "What color is the license-plate lamp shown throughout the rear diagrams?", ["White.", "Red.", "Amber.", "Blue."], 0, "The diagrams identify the license-plate lamp as white."], ["Vehicle Recognition", "What colors are used for the clearance lamps on an 80+ inch vehicle?", ["Amber at the front and red at the rear.", "Red at the front and amber at the rear.", "White at both ends.", "Blue at the front and red at the rear."], 0, "The 80+ inch diagrams show amber front clearance lamps and red rear clearance lamps."]];
+const QUESTIONS = [
+/* 14-11 — limitations */
+{p:"14-11",q:"What is the maximum height allowed for a vehicle, including its load?",a:["12 feet","13 feet 6 inches","14 feet","15 feet"],c:2,e:"Section 14.3 states that no vehicle, including its load, may be more than 14 feet high."},
+{p:"14-11",q:"What is the maximum width generally allowed for vehicles and loads, according to the section?",a:["96 inches","102 inches","108 inches","120 inches"],c:1,e:"The general width limit shown is 102 inches, subject to listed exceptions."},
+{p:"14-11",q:"A single motor vehicle other than a truck tractor may not exceed what length?",a:["35 feet","40 feet","45 feet","50 feet"],c:2,e:"The listed maximum is 45 feet, subject to exceptions."},
+{p:"14-11",q:"A semitrailer may not exceed what length when operated with a truck tractor and semitrailer combination?",a:["45 feet","55 feet","59 feet","65 feet"],c:2,e:"The section lists 59 feet for a semitrailer in a truck tractor/semitrailer combination."},
+{p:"14-11",q:"A semitrailer or trailer may not exceed what length each when operated in a truck tractor, semitrailer, and trailer combination?",a:["25 feet","28 1/2 feet","30 feet","35 feet"],c:1,e:"Each semitrailer or trailer is limited to 28 1/2 feet in that combination."},
+{p:"14-11",q:"What is the maximum length of a combination of vehicles other than a truck tractor-trailer combination?",a:["55 feet","60 feet","65 feet","75 feet"],c:2,e:"The listed maximum is 65 feet, subject to exceptions."},
+{p:"14-11",q:"What is the greatest weight allowed for a vehicle or combination, including the load, under the general limit?",a:["60,000 pounds","70,000 pounds","80,000 pounds","90,000 pounds"],c:2,e:"The general maximum shown is 80,000 pounds, with exceptions and permit provisions."},
+{p:"14-11",q:"Under the section's unloading rule, what tolerance is mentioned above the maximum gross weight allowed by law?",a:["2%","5%","8%","10%"],c:1,e:"The text says the vehicle may be required to unload if it exceeds the legal maximum plus a 5% tolerance."},
+{p:"14-11",q:"How far may a load generally extend beyond the rear of a vehicle?",a:["2 feet","3 feet","4 feet","7 feet"],c:1,e:"Section 14.3 lists three feet as the general rear-extension limit in the photographed text."},
+{p:"14-11",q:"What must the driver do before traveling under a bridge or overpass with a load?",a:["Check only the posted speed","Determine the load will safely clear it","Sound the horn twice","Stop and unload part of the load"],c:1,e:"The driver is responsible for determining that the load will safely pass under any bridge or overpass on the route."},
+{p:"14-11",q:"A passenger vehicle or other motor vehicle with an unloaded weight under 2,500 pounds may be coupled with more than how many other vehicles?",a:["None","One","Two","Three"],c:1,e:"It may not be coupled with more than one other vehicle."},
+{p:"14-11",q:"What is the maximum number of vehicles that may be operated in a combination?",a:["Two","Three","Four","Five"],c:1,e:"The section says not more than three vehicles may be operated in a combination."},
+{p:"14-11",q:"What permit can allow a vehicle to legally exceed 80,000 pounds under certain conditions?",a:["A temporary tag","An oversize/overweight permit","A farm registration only","A dealer plate"],c:1,e:"An oversize/overweight permit through the Texas Department of Transportation Permit Office may allow the exception."},
+{p:"14-11",q:"What is the general rule for a load extending over the front or rear?",a:["It may extend any distance","It may extend more than 10 feet","It may not exceed the stated three-foot limit unless an exception applies","It must always be removed"],c:2,e:"The section gives a three-foot general limit and then lists exceptions."},
+{p:"14-11",q:"What does the slow-moving vehicle emblem apply to?",a:["Any parked vehicle","Slow-moving vehicles designed to operate at 25 mph or less","Only passenger cars","Only commercial buses"],c:1,e:"It is required for slow-moving vehicles designed to operate at a maximum speed of 25 mph or less."},
+{p:"14-11",q:"Where is the use of the slow-moving vehicle emblem prohibited?",a:["On slow-moving vehicles","On construction vehicles","On any vehicle other than a slow-moving vehicle","On farm machinery"],c:2,e:"The emblem must not be used on other vehicles or stationary objects."},
+{p:"14-11",q:"Which is an exception to the special slow-moving emblem requirement?",a:["A vehicle doing actual construction work within a properly marked construction area","Any speeding vehicle","Any passenger car","A parked trailer"],c:0,e:"The section lists actual construction work within the marked construction area as an exception."},
+{p:"14-11",q:"What equipment is specifically described as unlawful on a highway if its wheels have extensions that would damage the road?",a:["Vehicles with tire chains","Vehicles with cleats, lugs, flanges, studs, spikes, or similar rim extensions","Vehicles with air brakes","Vehicles with dual tires"],c:1,e:"Those damaging wheel extensions are unlawful; tire chains for safety are not prohibited by this rule."},
 
-const key="txcmv_section14_v4";
-let S=JSON.parse(localStorage.getItem(key)||'{"seen":{},"correct":0,"answered":0,"missed":{},"topic":{}}');
-let deck=[...questions], di=0, quiz=[], qi=0, mode="quiz", testCorrect=0, testAnswered=0, testTitle="Quiz";
+/* 14-12 — towing, loose materials, exceptions */
+{p:"14-12",q:"When one vehicle is towing another, what is the maximum length of the connection in general?",a:["10 feet","12 feet","15 feet","20 feet"],c:2,e:"The drawbar, chain, rope, cable, or other connection must generally be no longer than 15 feet."},
+{p:"14-12",q:"When a chain, rope, or cable is used as a towing connection, what must be attached to it?",a:["A red light","A white flag at least 12 inches square","A blue reflector","A yellow sign"],c:1,e:"A white flag not less than 12 inches square must be attached."},
+{p:"14-12",q:"What is required for vehicles, trailers, etc. weighing 5,000 pounds or more that have metal tires?",a:["A special permit","A school-bus endorsement","A dealer tag","Nothing"],c:0,e:"They may not be operated on a highway without a special permit."},
+{p:"14-12",q:"Loose material such as dirt, sand, gravel, or wood chips must be transported so it cannot do what?",a:["Increase fuel economy","Blow or spill from the vehicle","Touch the trailer","Become wet"],c:1,e:"The load must be secured against blowing or spilling."},
+{p:"14-12",q:"What must the bed carrying loose material have?",a:["Only a tarp","Complete enclosure on the sides, front, and rear that prevents escape of the load","A passenger seat","A flashing blue light"],c:1,e:"The bed must be enclosed by a tailgate, board, or panel arrangement that prevents escape."},
+{p:"14-12",q:"What must generally cover the top of a load of loose material?",a:["A canvas, tarpaulin, or other securely fastened covering","A metal plate only","Nothing","A red flag only"],c:0,e:"The top must generally be covered and the covering secured to the front and back."},
+{p:"14-12",q:"Which vehicles are exempt from width limitations on highways, except the Interstate system when operated during daylight hours?",a:["All passenger cars","Water-well/construction machinery, farm tractors, implements of husbandry, and vehicles hauling them","All motorcycles","All school buses"],c:1,e:"Those categories are listed as a width-limit exception, with the Interstate/daylight qualification."},
+{p:"14-12",q:"A single motor vehicle used only to transport seed cotton, cotton, or cotton-processing equipment may operate up to what width with the required Cotton Vehicle plate?",a:["102 inches","120 inches","132 inches","144 inches"],c:1,e:"The cotton-vehicle exception allows up to 120 inches."},
+{p:"14-12",q:"What is the maximum width listed for vehicles carrying cylindrically shaped bales of hay?",a:["120 inches","132 inches","144 inches","160 inches"],c:2,e:"The section lists 144 inches."},
+{p:"14-12",q:"A motor bus with air brakes and three or more axles, or four tires on the rear axle, may be how long?",a:["35 feet","40 feet","45 feet","50 feet"],c:2,e:"The special exception allows 45 feet; otherwise the listed bus length is 35 feet."},
+{p:"14-12",q:"The length requirements for vehicles and combinations do not apply when they are operated only where?",a:["On Interstates","Within city limits","On farm roads","At night"],c:1,e:"The photographed section says the length requirements do not apply when operated only within city limits."},
+{p:"14-12",q:"A non-truck-tractor combination of not more than 90 feet may be used to haul poles, piling, and unrefined timber how far from the forest to a mill?",a:["75 miles","100 miles","125 miles","150 miles"],c:2,e:"The listed distance is not more than 125 miles, from sunrise to sunset."},
+{p:"14-12",q:"For the electric power-line maintenance exception, what is the maximum combination length?",a:["65 feet","75 feet","90 feet","100 feet"],c:1,e:"The listed exception permits a combination of not more than 75 feet."},
+{p:"14-12",q:"For that electric power-line maintenance exception, what maximum speed is stated?",a:["40 mph","45 mph","50 mph","55 mph"],c:2,e:"The speed may not exceed 50 mph."},
+{p:"14-12",q:"How much does the section state the annual fee is for the 75-foot electric power-line maintenance combination exception?",a:["$50","$75","$100","$120"],c:3,e:"The photographed page states a $120-per-year fee."},
+{p:"14-12",q:"Under the rear-extension exception, a motor vehicle being carried at the rear of a trailer may extend no more than how far beyond the trailer?",a:["3 feet","4 feet","6 feet","7 feet"],c:3,e:"One condition is that it does not extend more than seven feet beyond the rear of the trailer."},
+{p:"14-12",q:"Which condition is part of the rear-extension exception for a motor vehicle carried at the rear of a trailer?",a:["It must be designed and intended to be carried at the rear of the trailer","It must be a passenger car","It must be under 2,500 pounds","It must be unregistered"],c:0,e:"The motor vehicle must be designed and intended to be carried at the rear of the trailer."},
 
-const labels=[["home","Home"],["learn","Learn"],["quiz","Quiz"],["mastery","Mastery"],["missed","Missed"],["topics","Topics"],["numbers","Numbers"]];
-document.getElementById("nav").innerHTML=labels.map(([id,l])=>`<button data-v="${id}" onclick="go('${id}')">${l}</button>`).join("");
+/* 14-13 — operating/safety */
+{p:"14-13",q:"Is it lawful for a commercial motor vehicle to coast down a grade with the clutch disengaged while the transmission is left in gear?",a:["Yes","Only below 25 mph","No","Only with hazard lights on"],c:2,e:"The section says coasting that way is unlawful. Shift to a lower gear before starting down the hill."},
+{p:"14-13",q:"When one truck is following another, what should the following truck leave?",a:["No extra space","Enough space for another vehicle to overtake and enter safely","Exactly one car length","Exactly 2 seconds"],c:1,e:"The following truck should keep enough distance to allow another vehicle to overtake and enter the space safely."},
+{p:"14-13",q:"Which vehicle must stop at railroad grade crossings under the listed rule outside business or residential districts?",a:["Only motorcycles","A school bus carrying school children for hire","Only pickup trucks","Only taxis"],c:1,e:"School buses carrying school children for hire must stop at railroad crossings unless the listed traffic-control exception applies."},
+{p:"14-13",q:"Which type of heavy equipment must stop at all railroad grade crossings?",a:["Crossover SUVs","Super-heavy equipment such as crawler tractors, steam shovels, derricks, and rollers","Motorcycles","Sedans"],c:1,e:"The section specifically lists super-heavy equipment."},
+{p:"14-13",q:"Trucks carrying what material must stop at railroad grade crossings?",a:["Furniture","Explosives","Clothing","Produce only"],c:1,e:"Trucks carrying explosives must stop, subject to the listed exceptions."},
+{p:"14-13",q:"Which is an exception to the railroad-crossing stop provisions for explosives trucks?",a:["A normal two-lane road","An abandoned track","A crowded intersection","A school zone"],c:1,e:"The section lists streetcar crossings, abandoned tracks, industrial switching tracks, and traffic-control directions as exceptions."},
+{p:"14-13",q:"When making a right turn with a large vehicle, the driver should generally approach the corner about how far from the curb?",a:["1 foot","2 feet","4 feet","8 feet"],c:2,e:"The recommended approach is about four feet from the curb, close enough to keep cars from passing on the right."},
+{p:"14-13",q:"When turning right with a large vehicle, when should the driver swing wide to the right?",a:["Before reaching the corner","As soon as the front wheels pass the corner","After the rear wheels pass the corner","Only after stopping"],c:1,e:"The front wheels should pass the corner before the driver swings wide."},
+{p:"14-13",q:"What is a recommended safe-backing practice before backing a large or long vehicle?",a:["Back immediately using only mirrors","Get out and walk around the truck to make sure nothing is behind it","Open only the left door","Turn off all mirrors"],c:1,e:"The section recommends getting out and walking around the truck first."},
+{p:"14-13",q:"When backing, which mirrors should the driver use?",a:["Only the left mirror","Only the right mirror","Both rearview mirrors","No mirrors"],c:2,e:"Use both rearview mirrors; the driver cannot see the right side by hanging out the left door."},
+{p:"14-13",q:"If you must back some distance, what should you do?",a:["Back continuously","Stop part way, then get out and check progress","Accelerate","Use only the horn"],c:1,e:"Stop part way and check progress."},
+{p:"14-13",q:"What is recommended when possible to help guide a large vehicle while backing?",a:["Have someone in a safe place signal","Have someone stand directly behind the tires","Use a passenger as a spotter in traffic","Turn off the mirrors"],c:0,e:"A person in a safe place can guide the driver by signaling."},
+{p:"14-13",q:"What should you avoid when backing?",a:["Checking mirrors","Backing around an intersection corner to turn around","Walking around the vehicle","Using a spotter"],c:1,e:"The section says never back around an intersection corner to turn around."},
+{p:"14-13",q:"When backing over a sidewalk into a street, what should the driver do?",a:["Back quickly","Stop at the sidewalk to make sure no child is behind or close by","Sound the horn and continue","Ignore the curb"],c:1,e:"Stop at the sidewalk and check; stop again at the curb for a final traffic check before backing into the street."},
 
-function save(){localStorage.setItem(key,JSON.stringify(S))}
-function go(v){
- document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));
- document.getElementById(v).classList.add("active");
- document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.v===v));
- renderAll();
-}
-function pct(a,b){return b?Math.round(a/b*100):0}
-function stats(){return {seen:Object.keys(S.seen).length,answered:S.answered||0,correct:S.correct||0,accuracy:pct(S.correct||0,S.answered||0)}}
-function renderHome(){
- const st=stats();
- document.getElementById("home").innerHTML=`<div class="card">
- <span class="badge">SECTION 14</span><h2>Master the entire section</h2>
- <p>Study every topic from the uploaded pages, then practice with randomized questions and review anything you miss.</p>
- <div class="grid"><div class="stat"><b>${st.seen}</b><span class="small">Cards learned</span></div>
- <div class="stat"><b>${st.correct}</b><span class="small">Correct</span></div>
- <div class="stat"><b>${st.accuracy}%</b><span class="small">Accuracy</span></div></div>
- <button class="primary" onclick="go('learn')">Start Learning</button>
- <button class="primary" onclick="startTest(10)">10-Question Quiz</button>
- <button class="primary" onclick="startTest(questions.length)">Full Section Mock Exam</button>
- </div>
- <div class="card"><b>${questions.length} practice questions</b><p class="small">Questions cover papers/permits, warning devices, hazard lights, fire extinguishers, reflector placement, lighting requirements, vehicle-width differences, and the diagrams shown in your Section 14 photos.</p></div>`;
-}
-function renderLearn(){
- const q=deck[di%deck.length];
- document.getElementById("learn").innerHTML=`<div class="card"><div class="row"><span class="badge">${q[0]}</span><span class="small">Card ${(di%deck.length)+1} of ${deck.length}</span></div>
- <div class="flash"><h2>${q[1]}</h2><button class="secondary" onclick="showAnswer()">Show Answer</button><div id="flashAnswer" class="answer">${q[2][q[3]]}</div></div>
- <div class="row"><button class="secondary" onclick="prevCard()">← Previous</button><button class="secondary" onclick="markLearned()">✓ I know this</button><button class="secondary" onclick="nextCard()">Next →</button></div></div>`;
-}
-function showAnswer(){document.getElementById("flashAnswer").style.display="block"}
-function markLearned(){let q=deck[di%deck.length];S.seen[q[1]]=true;save();nextCard()}
-function nextCard(){di=(di+1)%deck.length;renderLearn()}
-function prevCard(){di=(di-1+deck.length)%deck.length;renderLearn()}
+/* 14-14 — registration/federal */
+{p:"14-14",q:"Where must all vehicles be registered?",a:["The county of residence","Any county in Texas","The county where purchased","Only in Austin"],c:0,e:"The section states all vehicles must be registered in the county of residence."},
+{p:"14-14",q:"Which vehicle is listed as not requiring registration, inspection, or a license plate when temporarily operated on the highway?",a:["Farm tractor","Passenger sedan","Commercial bus","Taxi"],c:0,e:"Farm tractors are listed among the exceptions."},
+{p:"14-14",q:"Farm trailers, farm semitrailers, and certain fertilizer/cottonseed trailers are included in the temporary exception when they weigh no more than:",a:["2,500 pounds gross","4,000 pounds gross","10,000 pounds gross","20,000 pounds gross"],c:1,e:"The listed threshold is not more than 4,000 pounds gross."},
+{p:"14-14",q:"What annual license-plate amount is listed for certain machinery and heavier farm trailers operated temporarily?",a:["$2","$5","$10","$25"],c:1,e:"The section lists a distinguishing $5.00 license plate, along with other special conditions."},
+{p:"14-14",q:"Certain farm trailers and related trailers over 4,000 pounds but not over what gross weight can qualify for that temporary exception?",a:["10,000 pounds","15,000 pounds","20,000 pounds","25,000 pounds"],c:2,e:"The photographed text says over 4,000 and not over 20,000 pounds gross."},
+{p:"14-14",q:"For certain farm-product and machinery movements during harvesting season, nonresident truck owners may receive a temporary registration permit for how many days?",a:["10 days","20 days","30 days","60 days"],c:2,e:"The section lists 30-day temporary registration permits."},
+{p:"14-14",q:"How long are buyers' temporary cardboard tags recognized according to the section?",a:["10 days","20 days","30 days","45 days"],c:1,e:"Buyers' temporary cardboard tags are recognized for 20 days."},
+{p:"14-14",q:"How long are out-of-state registration plates recognized in Texas after establishing residency or entering gainful employment?",a:["10 days","20 days","30 days","90 days"],c:2,e:"The section states 30 days."},
+{p:"14-14",q:"For what may farm-registered vehicles also be used to transport family members?",a:["Gainful employment only","Church, school, medical treatment/supplies, or other family necessities","Commercial delivery","Passenger-for-hire service"],c:1,e:"The section allows those family-related purposes, but not gainful employment."},
+{p:"14-14",q:"Which Federal Motor Carrier Safety Regulation parts are adopted by reference in the section?",a:["Parts 100-110","Parts 171-178 only","Parts 390-393 and 395-397","Parts 600-650"],c:2,e:"The photographed Section 14.8 cites 49 CFR Parts 390-393 and 395-397."},
+{p:"14-14",q:"Which Federal Hazardous Materials Regulation parts are cited?",a:["171-173, 177, and 178","200-205","390-397","500-505"],c:0,e:"The section cites Parts 171-173, 177, and 178."},
 
-function shuffleArray(arr){
- for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}
- return arr;
+/* 14-15 — sharing road */
+{p:"14-15",q:"What following distance does the section recommend on an open road?",a:["2 seconds","3 seconds","4 seconds","8 seconds"],c:2,e:"A four-second following distance is recommended on the open road."},
+{p:"14-15",q:"When traction is poor, the following gap should increase to approximately:",a:["4 seconds","5 seconds","6–8 seconds","10–12 seconds"],c:2,e:"The section recommends increasing the gap to 6–8 seconds when more reaction time is needed."},
+{p:"14-15",q:"Why should a truck driver leave more space between the truck and car ahead in heavy traffic?",a:["The truck becomes shorter","The truck looms larger in the mirror and needs more space to stop","It saves no fuel","It makes passing easier"],c:1,e:"The section notes that the truck looms frighteningly large in the mirror and should maintain a safe gap."},
+{p:"14-15",q:"What can tailgating or forming convoys promote?",a:["Safer passing","Unsafe passes by groups of cars stacked up behind","Better fuel economy","Shorter stopping distances"],c:1,e:"The section warns that tailgating/forming convoys can promote unsafe group passes."},
+{p:"14-15",q:"What does the section say about obeying the posted speed limit?",a:["It is optional for trucks","It is dangerous to obey","Remember to obey the speed limit","Only obey at night"],c:2,e:"The section emphasizes obeying posted speed limits."},
+{p:"14-15",q:"According to the section, driving at about 55 mph instead of 65 mph can improve fuel economy by approximately:",a:["A mile per gallon","5 miles per gallon","10 miles per gallon","20 miles per gallon"],c:0,e:"The text says fuel economy can increase by as much as a mile per gallon at 55 mph rather than 65 mph."},
+{p:"14-15",q:"What happens to stopping distance when speed doubles, according to the section?",a:["It doubles","It triples","It becomes four times greater","It stays the same"],c:2,e:"The section states that if speed doubles, stopping distance will be four times greater."},
+{p:"14-15",q:"Before changing lanes or passing, what should a professional truck driver remember about signals?",a:["Signals alone are enough","Signals alone aren't enough; make sure the maneuver can be made safely","Never signal","Only use hand signals"],c:1,e:"The section specifically says signals alone are not enough."},
+{p:"14-15",q:"Why should a truck driver leave extra space before pulling back in after passing a car?",a:["To avoid alarming the car driver","To increase speed","To reduce fuel economy","To block the car"],c:0,e:"The section says not to alarm the car driver by overtaking too closely and to leave extra space before pulling back in."},
+{p:"14-15",q:"What should a truck driver remember about the air pushed ahead of a truck?",a:["It has no effect","It can push a car, so keep as much space as possible between vehicles being passed","It stops motorcycles","It only affects buses"],c:1,e:"A truck pushes a wall of air ahead of it, so extra space is important."},
+{p:"14-15",q:"How should a truck driver handle slow traffic and congestion?",a:["Honk continuously","Keep cool and lay off the horn and flashing headlights","Pass on the shoulder","Follow closer"],c:1,e:"The section advises keeping cool and avoiding excessive horn use and flashing headlights."},
+{p:"14-15",q:"What should a truck driver do around school buses?",a:["Give school buses as much room as possible and watch for frequent stops","Pass immediately","Follow closely","Use the shoulder"],c:0,e:"The section says to give school buses as much room as possible and watch for frequent stops."},
+{p:"14-15",q:"Why can RVs and smaller vehicles pulling trailers be a concern around large trucks?",a:["They always have professional truck-driver skills","Their drivers may not have the same professional skills or knowledge and the vehicles can be affected by truck turbulence","They cannot stop","They are always wider"],c:1,e:"The section warns that these drivers may have less professional experience and that turbulence can affect the vehicles."},
+{p:"14-15",q:"What should a truck driver watch for in hot and cold conditions?",a:["Only traffic lights","Lost/fatigued motorists, overloaded cars with poor visibility, and distracted drivers","Only motorcycles","Only road construction"],c:1,e:"Those are specifically listed lookouts."},
+
+/* 14-16 — test-yourself and conditions */
+{p:"14-16",q:"What should be the first action of the driver of a disabled truck or bus?",a:["Leave it in the traffic lane","Get the disabled vehicle to a safe position/off the roadway as soon as possible","Turn off all warning devices","Walk away without warning traffic"],c:1,e:"The training material emphasizes protecting traffic and getting a disabled vehicle to a safe position."},
+{p:"14-16",q:"Clearance lamps, side-marker lamps, or reflectors mounted on or near the front of a vehicle should be what color?",a:["Red","Blue","Amber","White only"],c:2,e:"The front-facing clearance/side-marker identification shown in the material is amber."},
+{p:"14-16",q:"What is the greatest vehicle height allowed by the state law discussed in Section 14?",a:["12 feet","13 feet","14 feet","16 feet"],c:2,e:"The maximum height listed in Section 14.3 is 14 feet."},
+{p:"14-16",q:"What should you do when hauling equipment that is wider, heavier, or longer than the law permits?",a:["Drive anyway if traffic is light","Obtain the appropriate special/oversize permit and comply with the applicable requirements","Remove all warning lights","Only drive at night"],c:1,e:"The section discusses special exceptions and oversize/overweight permits for equipment outside standard limits."},
+{p:"14-16",q:"What types of vehicles are specifically required to stop at all railroad crossings in the operating rules?",a:["Only passenger cars","School buses in the listed situation, super-heavy equipment, and trucks carrying explosives, subject to exceptions","Only motorcycles","Only RVs"],c:1,e:"Section 14.5 identifies these categories and lists specific exceptions."},
+{p:"14-16",q:"What is the major attitude message for a professional truck driver?",a:["Automobiles are always the problem","Sharing the road with automobiles must be a safety concern","Speed is the most important goal","Following closely is acceptable"],c:1,e:"The section describes a good attitude as a professional truck driver's badge of honor and stresses safety when sharing the road."},
+{p:"14-16",q:"What winter conditions can lead to wheel-spinning and brake lock-up?",a:["Dry pavement","Ice and snow","Warm pavement","Light rain only"],c:1,e:"The section warns that ice and snow can cause wheel-spinning and brake lock-up."},
+{p:"14-16",q:"If you encounter a traffic jam-up and multiple vehicle accidents in winter conditions, what should you do?",a:["Drive through immediately","Stay back and wait for the vehicles to clear before trying to get through","Pass on the shoulder","Turn off your headlights"],c:1,e:"The section advises staying back and waiting for the scene to clear."},
+{p:"14-16",q:"What highway condition can suddenly narrow lanes and create confusing signs?",a:["A quiet residential street","Highway construction","A parking lot","A weigh station"],c:1,e:"Highway construction can suddenly turn roads into narrow lanes with confusing signs."},
+{p:"14-16",q:"What should truck drivers expect near highway construction?",a:["Only trucks","Heavy equipment and pedestrians may be nearby","No pedestrians","No lane changes"],c:1,e:"The section warns that heavy equipment and pedestrians are often nearby."},
+
+/* additional two-wheel passing */
+{p:"14-14",q:"When passing a two-wheeled vehicle, what minimum clearance should the truck driver allow?",a:["2 feet","4 feet","6 feet","10 feet"],c:2,e:"The section advises allowing at least six feet to the left of the two-wheeled vehicle when passing."},
+{p:"14-14",q:"Why is special care needed when passing motorcycles and bicycles?",a:["They are heavier than trucks","They are lighter and more subject to wind effects than four-wheeled vehicles","They always travel faster","They cannot be seen"],c:1,e:"The section notes that two-wheeled vehicles are lighter and more affected by wind."},
+{p:"14-14",q:"What can aerodynamic effects around a large vehicle do to a two-wheeled vehicle?",a:["Pull it suddenly toward the large vehicle by two or three feet","Stop it instantly","Make it wider","Raise it off the road"],c:0,e:"The section warns that aerodynamic effects can pull a two-wheeled vehicle toward the large vehicle by two or three feet."},
+{p:"14-14",q:"If oncoming traffic prevents you from safely moving into the next lane to pass a two-wheeled vehicle, what should you do?",a:["Pass on the shoulder","Follow the two-wheeled vehicle until oncoming traffic clears","Sound the horn until it moves","Move into the opposing lane anyway"],c:1,e:"The section says to slow and follow until oncoming traffic clears."}
+];
+
+const sections = {
+"14-11":"Limitations, vehicle combinations, load limits, slow-moving emblem and equipment",
+"14-12":"Towing, loose materials, special size/weight exceptions",
+"14-13":"Operating rules, railroad crossings, right turns and safe backing",
+"14-14":"Two-wheeled vehicles, registration and federal regulations",
+"14-15":"Sharing the road, tailgating, speeding, passing, school buses and hot/cold conditions",
+"14-16":"Attitude, winter/construction awareness and Test Your Knowledge"
+};
+
+let trainPool=[], trainIndex=0, trainAnswered=false;
+let testPool=[], testIndex=0, testCorrect=0, testAnswered=false;
+
+const getMissed=()=>JSON.parse(localStorage.getItem("txcmv14_missed")||"[]");
+const saveMissed=arr=>localStorage.setItem("txcmv14_missed",JSON.stringify([...new Set(arr)]));
+const getStats=()=>JSON.parse(localStorage.getItem("txcmv14_stats")||'{"best":null,"attempts":0}');
+function shuffle(a){return [...a].sort(()=>Math.random()-0.5)}
+function choices(q){return shuffle(q.a.map((text,i)=>({text,i})))}
+function tab(name){
+ document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"));
+ document.getElementById(name).classList.remove("hidden");
+ document.querySelectorAll(".navbtn").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));
+ if(name==="missed")renderMissed();
+ if(name==="study")renderStudy();
 }
-function balancedPositions(n){
- const positions=[];
- for(let i=0;i<n;i++) positions.push(i%4);
- return shuffleArray(positions);
-}
-function prepareQuiz(source,n){
- const picked=[...source];
- shuffleArray(picked);
- const selected=picked.slice(0,Math.min(n,picked.length));
- const targets=balancedPositions(selected.length);
- return selected.map((q,idx)=>{
-   const options=[...q[2]];
-   const correctText=options[q[3]];
-   const distractors=options.filter((_,i)=>i!==q[3]);
-   shuffleArray(distractors);
-   const arranged=[];
-   let d=0;
-   for(let i=0;i<4;i++) arranged.push(i===targets[idx]?correctText:distractors[d++]);
-   return [q[0],q[1],arranged,targets[idx],q[4]];
+document.querySelectorAll(".navbtn").forEach(b=>b.onclick=()=>tab(b.dataset.tab));
+
+function renderQuestion(containerId,q,mode,idx,total){
+ const el=document.getElementById(containerId);
+ const opts=choices(q);
+ let selected=null;
+ el.innerHTML=`
+   <div class="small">Page ${q.p} • ${mode==="test"?"Test question":"Training question"}</div>
+   <div class="q">${q.q}</div>
+   <div class="answers">${opts.map((o,n)=>`<button class="answer" data-original="${o.i}">${String.fromCharCode(65+n)}. ${o.text}</button>`).join("")}</div>
+   <div id="${containerId}Feedback"></div>
+   <div class="row" style="margin-top:12px"><button class="secondary" id="${containerId}Skip">Skip</button></div>`;
+ const buttons=[...el.querySelectorAll(".answer")];
+ buttons.forEach(btn=>btn.onclick=()=>{
+   if(selected!==null)return;
+   selected=Number(btn.dataset.original);
+   const ok=selected===q.c;
+   buttons.forEach(b=>{
+     const oi=Number(b.dataset.original);
+     if(oi===q.c)b.classList.add("correct");
+     else if(oi===selected)b.classList.add("wrong");
+   });
+   const fb=document.getElementById(containerId+"Feedback");
+   fb.className="feedback "+(ok?"good":"bad");
+   fb.innerHTML=ok?"Correct!":"Not quite. Correct answer: "+q.a[q.c]+".";
+   if(q.e)fb.innerHTML+=" <span class='small' style='color:inherit'>"+q.e+"</span>";
+   if(mode==="train"){
+     trainAnswered=true;
+     if(!ok){let m=getMissed();m.push(QUESTIONS.indexOf(q));saveMissed(m);}
+     document.getElementById(containerId+"Skip").textContent=idx+1<total?"Next question":"Restart training";
+     document.getElementById(containerId+"Skip").onclick=()=>nextTrain();
+   }else{
+     testAnswered=true;
+     if(ok)testCorrect++;
+     if(!ok){let m=getMissed();m.push(QUESTIONS.indexOf(q));saveMissed(m);}
+     document.getElementById("testScore").textContent=testCorrect+" correct";
+     document.getElementById(containerId+"Skip").textContent=idx+1<total?"Next question":"Finish test";
+     document.getElementById(containerId+"Skip").onclick=()=>nextTest();
+   }
  });
+ document.getElementById(containerId+"Skip").onclick=()=>{
+   if(mode==="train")nextTrain(); else nextTest();
+ };
 }
-function startTest(n, source=questions, title="Quiz"){
- quiz=prepareQuiz(source,n);qi=0;testCorrect=0;testAnswered=0;testTitle=title;mode="quiz";go("quiz")}
-function startMissedTest(){
- const m=questions.filter(q=>S.missed[q[1]]);
- if(!m.length){
-   alert("You don't have any missed questions yet.");
-   return;
- }
- startTest(m.length,m,"Missed Questions Test");
+
+function initTrain(){
+ trainPool=shuffle(QUESTIONS);trainIndex=0;trainAnswered=false;showTrain();
 }
-function renderQuiz(){
- if(!quiz.length){
-   document.getElementById("quiz").innerHTML='<div class="card"><h2>No questions available.</h2></div>';
-   return;
- }
- if(qi>=quiz.length){finishTest();return}
- const q=quiz[qi];
- document.getElementById("quiz").innerHTML=`<div class="card"><span class="badge">${testTitle}</span><p class="small">Question ${qi+1} of ${quiz.length}</p><h2>${q[1]}</h2>
- <div id="opts">${q[2].map((a,i)=>`<button class="option" onclick="answer(${i})">${String.fromCharCode(65+i)}. ${a}</button>`).join("")}</div><div id="fb"></div></div>`;
+function showTrain(){
+ document.getElementById("trainCount").textContent=(trainIndex+1)+" / "+trainPool.length;
+ document.getElementById("trainBar").style.width=((trainIndex+1)/trainPool.length*100)+"%";
+ renderQuestion("trainQuestion",trainPool[trainIndex],"train",trainIndex,trainPool.length);
 }
-function answer(i){
- const q=quiz[qi], buttons=[...document.querySelectorAll("#opts .option")];
- buttons.forEach(b=>b.disabled=true);
- const ok=i===q[3];
- buttons[q[3]].classList.add("correct"); if(!ok)buttons[i].classList.add("wrong");
-
- testAnswered++;
- if(ok)testCorrect++;
-
- S.answered=(S.answered||0)+1;
- if(ok)S.correct=(S.correct||0)+1;
- S.seen[q[1]]=true;
-
- if(!ok){
-   S.missed[q[1]]=(S.missed[q[1]]||0)+1;
- }else if(S.missed[q[1]]){
-   delete S.missed[q[1]];
- }
-
- S.topic[q[0]]=(S.topic[q[0]]||{a:0,c:0});
- S.topic[q[0]].a++;
- if(ok)S.topic[q[0]].c++;
- save();
-
- document.getElementById("fb").innerHTML=`<div class="feedback"><b>${ok?"Correct!":"Not quite."}</b><br>${q[4]}<br><button class="primary" onclick="nextQuestion()">Next Question</button></div>`;
+function nextTrain(){
+ trainIndex++;
+ if(trainIndex>=trainPool.length){initTrain();return}
+ trainAnswered=false;showTrain();
 }
-function nextQuestion(){qi++;renderQuiz()}
+initTrain();
+
+function startTest(){
+ const n=Math.min(Number(document.getElementById("testSize").value),QUESTIONS.length);
+ testPool=shuffle(QUESTIONS).slice(0,n);testIndex=0;testCorrect=0;testAnswered=false;
+ document.getElementById("testSetup").classList.add("hidden");
+ document.getElementById("testCard").classList.remove("hidden");
+ document.getElementById("testResult").classList.add("hidden");
+ showTest();
+}
+function showTest(){
+ document.getElementById("testCount").textContent=(testIndex+1)+" / "+testPool.length;
+ document.getElementById("testScore").textContent=testCorrect+" correct";
+ document.getElementById("testBar").style.width=((testIndex+1)/testPool.length*100)+"%";
+ renderQuestion("testQuestion",testPool[testIndex],"test",testIndex,testPool.length);
+}
+function nextTest(){
+ testIndex++;
+ if(testIndex>=testPool.length){finishTest();return}
+ testAnswered=false;showTest();
+}
 function finishTest(){
- const total=testAnswered;
- const score=pct(testCorrect,total);
- document.getElementById("quiz").innerHTML=`<div class="card">
- <span class="badge">${testTitle}</span>
- <h2>Test complete 🎉</h2>
- <div class="score">${testCorrect}/${total}</div>
- <p style="text-align:center;font-weight:800;font-size:18px">${score}%</p>
- <p style="text-align:center">Your answers were saved to your progress.</p>
- ${testTitle==="Missed Questions Test" ? `<p style="text-align:center" class="small">Questions answered correctly have been removed from your Missed Questions list.</p>` : ""}
- <button class="primary" onclick="startTest(10)">Take Another 10-Question Quiz</button>
- <button class="primary" onclick="go('missed')">Review Missed Questions</button>
- <button class="primary" onclick="go('mastery')">View Mastery</button>
- </div>`;
+ const pct=Math.round(testCorrect/testPool.length*100);
+ const stats=getStats();stats.attempts++;if(stats.best===null||pct>stats.best)stats.best=pct;
+ localStorage.setItem("txcmv14_stats",JSON.stringify(stats));
+ document.getElementById("testCard").classList.add("hidden");
+ const r=document.getElementById("testResult");r.classList.remove("hidden");
+ r.innerHTML=`<h2>Test Complete</h2><div class="statgrid"><div class="stat"><b>${pct}%</b><span class="small">Score</span></div><div class="stat"><b>${testCorrect}</b><span class="small">Correct</span></div><div class="stat"><b>${testPool.length-testCorrect}</b><span class="small">Missed</span></div></div><div style="height:12px"></div><button class="primary" onclick="resetTest()">Take Another Test</button>`;
+ renderMissed();
 }
-
-function renderMastery(){
- const st=stats(), topics=[...new Set(questions.map(q=>q[0]))];
- document.getElementById("mastery").innerHTML=`<div class="card"><h2>Mastery</h2><div class="grid"><div class="stat"><b>${st.seen}</b><span class="small">Questions seen</span></div><div class="stat"><b>${st.correct}</b><span class="small">Correct</span></div><div class="stat"><b>${st.accuracy}%</b><span class="small">Accuracy</span></div></div></div>
- ${topics.map(t=>{let x=S.topic[t]||{a:0,c:0};return `<div class="topic"><b>${t}</b><span class="small">${x.c}/${x.a} correct • ${pct(x.c,x.a)}%</span><div class="bar"><i style="width:${pct(x.c,x.a)}%"></i></div></div>`}).join("")}
- <div class="card"><button class="secondary" onclick="resetProgress()">Reset Progress</button></div>`;
+function resetTest(){
+ document.getElementById("testSetup").classList.remove("hidden");
+ document.getElementById("testCard").classList.add("hidden");
+ document.getElementById("testResult").classList.add("hidden");
 }
 function renderMissed(){
- const m=questions.filter(q=>S.missed[q[1]]);
- document.getElementById("missed").innerHTML=`<div class="card">
- <h2>Missed Questions</h2>
- <p class="small">${m.length} questions currently need review.</p>
- ${m.length?`<button class="primary" onclick="startMissedTest()">Practice Missed Questions</button>`:"<p>Nothing missed yet. Keep going!</p>"}
- </div>
- ${m.map(q=>`<div class="topic"><b>${q[1]}</b><span class="small">${q[0]} • missed ${S.missed[q[1]]} time(s)</span></div>`).join("")}`;
+ const missed=getMissed(),stats=getStats();
+ document.getElementById("missedNum").textContent=missed.length;
+ document.getElementById("bestScore").textContent=stats.best===null?"—":stats.best+"%";
+ document.getElementById("attempts").textContent=stats.attempts;
+ const list=document.getElementById("missedList");
+ if(!missed.length){list.innerHTML='<p class="muted">No missed questions saved yet. Keep practicing.</p>';return}
+ list.innerHTML=missed.map((idx,n)=>{
+   const q=QUESTIONS[idx];
+   return `<div class="study-item"><div class="small">Missed #${n+1} • Page ${q.p}</div><div class="study-q">${q.q}</div><div class="answer-text">Correct answer: ${q.a[q.c]}</div><div class="small">${q.e||""}</div></div>`;
+ }).join("");
 }
-function renderTopics(){
- const topics=[...new Set(questions.map(q=>q[0]))];
- document.getElementById("topics").innerHTML=`<div class="card"><h2>Topics</h2>${topics.map(t=>{let n=questions.filter(q=>q[0]===t).length;return `<div class="topic"><b>${t}</b><span class="small">${n} questions</span><button class="secondary" onclick='startTopic(${JSON.stringify(t)})'>Practice</button></div>`}).join("")}</div>`;
+function clearMissed(){localStorage.removeItem("txcmv14_missed");renderMissed();}
+function clearStats(){localStorage.removeItem("txcmv14_stats");renderMissed();}
+
+function renderStudy(){
+ const groups={};
+ QUESTIONS.forEach(q=>(groups[q.p]??=[]).push(q));
+ document.getElementById("studyGuide").innerHTML=Object.keys(groups).map(p=>`
+   <div class="study-item">
+     <h3>Page ${p} — ${sections[p]||""}</h3>
+     ${groups[p].map(q=>`<div class="study-item"><div class="study-q">${q.q}</div><div class="answer-text">${q.a[q.c]}</div><div class="small">${q.e||""}</div></div>`).join("")}
+   </div>`).join("");
 }
-function startTopic(t){
- const topicQuestions=questions.filter(q=>q[0]===t);
- startTest(topicQuestions.length,topicQuestions,t+" Practice");
-}
-function renderNumbers(){
- const nums=[
- ["80 inches","Width threshold used in the lighting diagrams."],
- ["30 feet","Overall length threshold mentioned for hazard-warning lights."],
- ["24 inches","Minimum reflector height above the roadway."],
- ["60 inches","Maximum reflector height above the roadway."],
- ["10 feet","Near-vehicle distance marked in the warning-device diagrams."],
- ["100 feet","Warning-device distance shown in the two-way roadway diagram and vision-obscured diagram."],
- ["200 feet","Longer warning-device distance shown in the divided-highway diagram."],
- ["500 feet","Distance reference shown in the vision-obscured diagram."],
- ["1 quart","Minimum chemical fire-extinguisher capacity for the passenger vehicles listed."],
- ["3","Number of flares, red electric lanterns, or portable red emergency reflectors specified."],
- ["2","Number of red flags used when lamps are not required."]
- ];
- document.getElementById("numbers").innerHTML=`<div class="card"><h2>Important Numbers</h2><p class="small">Memorize these measurements from the uploaded Section 14 pages.</p></div>${nums.map(x=>`<div class="card"><div class="num">${x[0]}</div><div>${x[1]}</div></div>`).join("")}`;
-}
-function resetProgress(){
- if(confirm("Reset all Section 14 progress?")){
-   S={seen:{},correct:0,answered:0,missed:{},topic:{}};
-   save();
-   renderAll();
- }
-}
-function renderAll(){
- renderHome();
- renderLearn();
- renderMastery();
- renderMissed();
- renderTopics();
- renderNumbers();
- if(document.getElementById("quiz").classList.contains("active"))renderQuiz();
-}
-renderAll();
-go("home");
+renderMissed();
 </script>
 </body>
 </html>
